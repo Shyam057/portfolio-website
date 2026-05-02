@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+{% block title %}Shyam Kumar Bhattarai - Backend Developer{% endblock %}
+
+{% block content %}
+
+<!-- ========== HERO SECTION ========== -->
+<section style="min-height: 100vh; display: flex; align-items: center; background: linear-gradient(135deg, #0a0a0a 0%, #020c1b 100%);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <p style="color: #64ffda; font-size: 1.1rem; margin-bottom: 10px;">
+                    Hi, my name is
+                </p>
+                <h1 style="font-size: 4rem; font-weight: 700; color: #ccd6f6; line-height: 1.1;">
+                    {% if about %}{{ about.name }}{% else %}Shyam Kumar Bhattarai{% endif %}
+                </h1>
+                <h2 style="font-size: 2.5rem; font-weight: 600; color: #8892b0; margin-bottom: 20px;">
+                    {% if about %}{{ about.title }}{% else %}Backend Developer{% endif %}
+                </h2>
+                <p style="color: #8892b0; font-size: 1.1rem; max-width: 600px; line-height: 1.8; margin-bottom: 30px;">
+                    {% if about %}{{ about.bio|truncatewords:40 }}{% endif %}
+                </p>
+                <div>
+                    <a href="{% url 'portfolio' %}" class="btn-primary-custom me-3">
+                        View My Work
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn-primary-custom">
+                        Get In Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== ABOUT SECTION ========== -->
+<section class="section" id="about">
+    <div class="container">
+        <h2 class="section-title">About <span>Me</span></h2>
+        <div class="section-divider"></div>
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4">
+                {% if about %}
+                <p style="color: #8892b0; line-height: 1.9; font-size: 1rem;">
+                    {{ about.bio }}
+                </p>
+                <div class="mt-4">
+                    <p style="color: #8892b0;">
+                        <i class="fas fa-envelope text-highlight me-2"></i>
+                        {{ about.email }}
+                    </p>
+                    <p style="color: #8892b0;">
+                        <i class="fas fa-phone text-highlight me-2"></i>
+                        {{ about.phone }}
+                    </p>
+                    <p style="color: #8892b0;">
+                        <i class="fas fa-map-marker-alt text-highlight me-2"></i>
+                        {{ about.location }}
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                {% if about.profile_image %}
+                <img src="{{ about.profile_image.url }}"
+                     alt="Shyam Kumar Bhattarai"
+                     style="width: 100%; border-radius: 10px; border: 2px solid #64ffda;">
+                {% else %}
+                <div style="background: #112240; border-radius: 10px; border: 2px solid #64ffda; height: 350px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user" style="font-size: 8rem; color: #64ffda;"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== SKILLS SECTION ========== -->
+<section class="section" style="background: #020c1b;" id="skills">
+    <div class="container">
+        <h2 class="section-title">My <span>Skills</span></h2>
+        <div class="section-divider"></div>
+        <div class="row">
+            {% regroup skills by category as skill_groups %}
+            {% for group in skill_groups %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card-dark h-100">
+                    <h5 style="color: #64ffda; margin-bottom: 15px; text-transform: capitalize;">
+                        <i class="fas fa-code me-2"></i>
+                        {{ group.grouper|title }}
+                    </h5>
+                    {% for skill in group.list %}
+                    <span style="display: inline-block; background: rgba(100,255,218,0.1); color: #64ffda; border: 1px solid rgba(100,255,218,0.3); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; margin: 3px;">
+                        {{ skill.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ========== EXPERIENCE SECTION ========== -->
+<section class="section" id="experience">
+    <div class="container">
+        <h2 class="section-title">Work <span>Experience</span></h2>
+        <div class="section-divider"></div>
+        <div class="row">
+            {% for exp in experience %}
+            <div class="col-12 mb-4">
+                <div class="card-dark">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+                        <div>
+                            <h5 style="color: #ccd6f6; font-weight: 600;">{{ exp.job_title }}</h5>
+                            <p style="color: #64ffda; margin-bottom: 5px;">
+                                {{ exp.company }} — {{ exp.location }}
+                            </p>
+                        </div>
+                        <span style="color: #8892b0; font-size: 0.9rem; background: rgba(100,255,218,0.1); padding: 5px 12px; border-radius: 20px;">
+                            {{ exp.start_date }} – {{ exp.end_date }}
+                        </span>
+                    </div>
+                    <p style="color: #8892b0; margin-top: 10px; line-height: 1.8;">
+                        {{ exp.description }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ========== EDUCATION SECTION ========== -->
+<section class="section" style="background: #020c1b;" id="education">
+    <div class="container">
+        <h2 class="section-title">My <span>Education</span></h2>
+        <div class="section-divider"></div>
+        <div class="row">
+            {% for edu in education %}
+            <div class="col-lg-6 mb-4">
+                <div class="card-dark h-100">
+                    <div class="d-flex justify-content-between align-items-start flex-wrap">
+                        <h5 style="color: #ccd6f6; font-weight: 600;">{{ edu.degree }}</h5>
+                        <span style="color: #8892b0; font-size: 0.9rem; background: rgba(100,255,218,0.1); padding: 5px 12px; border-radius: 20px;">
+                            {{ edu.start_year }} – {{ edu.end_year }}
+                        </span>
+                    </div>
+                    <p style="color: #64ffda; margin: 5px 0;">
+                        {{ edu.institution }}, {{ edu.location }}
+                    </p>
+                    {% if edu.gpa %}
+                    <p style="color: #8892b0; font-size: 0.9rem;">
+                        <i class="fas fa-star text-highlight me-1"></i> GPA: {{ edu.gpa }}
+                    </p>
+                    {% endif %}
+                    {% if edu.description %}
+                    <p style="color: #8892b0; font-size: 0.9rem;">{{ edu.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ========== FEATURED PROJECTS SECTION ========== -->
+<section class="section" id="projects">
+    <div class="container">
+        <h2 class="section-title">Featured <span>Projects</span></h2>
+        <div class="section-divider"></div>
+        <div class="row">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card-dark h-100">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}"
+                         style="width: 100%; height: 180px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;">
+                    {% else %}
+                    <div style="width: 100%; height: 180px; background: rgba(100,255,218,0.05); border-radius: 5px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-code" style="font-size: 3rem; color: #64ffda;"></i>
+                    </div>
+                    {% endif %}
+                    <h5 style="color: #ccd6f6; font-weight: 600;">{{ project.title }}</h5>
+                    <p style="color: #8892b0; font-size: 0.9rem; line-height: 1.7;">
+                        {{ project.description|truncatewords:25 }}
+                    </p>
+                    <p style="margin-top: 10px;">
+                        <span style="color: #64ffda; font-size: 0.85rem;">
+                            <i class="fas fa-tools me-1"></i>{{ project.technologies }}
+                        </span>
+                    </p>
+                    <div class="mt-3">
+                        {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank"
+                           style="color: #8892b0; margin-right: 15px; text-decoration: none;">
+                            <i class="fab fa-github me-1"></i>Code
+                        </a>
+                        {% endif %}
+                        {% if project.live_link %}
+                        <a href="{{ project.live_link }}" target="_blank"
+                           style="color: #8892b0; text-decoration: none;">
+                            <i class="fas fa-external-link-alt me-1"></i>Live
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio' %}" class="btn-primary-custom">
+                View All Projects
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact - Shyam Kumar Bhattarai{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Get In <span>Touch</span></h2>
+        <div class="section-divider"></div>
+
+        <div class="row">
+            <!-- Contact Form -->
+            <div class="col-lg-7 mb-5">
+                <div class="card-dark">
+                    <h5 style="color:#ccd6f6; margin-bottom:20px;">
+                        Send Me a Message
+                    </h5>
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label style="color:#8892b0; font-size:0.9rem; margin-bottom:5px; display:block;">
+                                Your Name
+                            </label>
+                            <input type="text" name="name" required
+                                   style="width:100%; background:#0a192f; border:1px solid rgba(255,255,255,0.1); color:#ccd6f6; padding:10px 15px; border-radius:5px; font-size:0.95rem; outline:none;"
+                                   placeholder="John Doe">
+                        </div>
+
+                        <div class="mb-3">
+                            <label style="color:#8892b0; font-size:0.9rem; margin-bottom:5px; display:block;">
+                                Email Address
+                            </label>
+                            <input type="email" name="email" required
+                                   style="width:100%; background:#0a192f; border:1px solid rgba(255,255,255,0.1); color:#ccd6f6; padding:10px 15px; border-radius:5px; font-size:0.95rem; outline:none;"
+                                   placeholder="john@example.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label style="color:#8892b0; font-size:0.9rem; margin-bottom:5px; display:block;">
+                                Subject
+                            </label>
+                            <input type="text" name="subject" required
+                                   style="width:100%; background:#0a192f; border:1px solid rgba(255,255,255,0.1); color:#ccd6f6; padding:10px 15px; border-radius:5px; font-size:0.95rem; outline:none;"
+                                   placeholder="How can I help you?">
+                        </div>
+
+                        <div class="mb-4">
+                            <label style="color:#8892b0; font-size:0.9rem; margin-bottom:5px; display:block;">
+                                Message
+                            </label>
+                            <textarea name="message" rows="6" required
+                                      style="width:100%; background:#0a192f; border:1px solid rgba(255,255,255,0.1); color:#ccd6f6; padding:10px 15px; border-radius:5px; font-size:0.95rem; outline:none; resize:vertical;"
+                                      placeholder="Write your message here..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary-custom w-100"
+                                style="cursor:pointer; text-align:center;">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-lg-5">
+                <div class="card-dark mb-4">
+                    <h5 style="color:#ccd6f6; margin-bottom:20px;">
+                        Contact Information
+                    </h5>
+
+                    {% if about %}
+                    <div class="d-flex align-items-start mb-3">
+                        <div style="width:40px; height:40px; background:rgba(100,255,218,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; flex-shrink:0;">
+                            <i class="fas fa-envelope" style="color:#64ffda;"></i>
+                        </div>
+                        <div>
+                            <p style="color:#8892b0; font-size:0.85rem; margin-bottom:2px;">Email</p>
+                            <a href="mailto:{{ about.email }}"
+                               style="color:#ccd6f6; text-decoration:none; font-size:0.95rem;">
+                                {{ about.email }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-3">
+                        <div style="width:40px; height:40px; background:rgba(100,255,218,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; flex-shrink:0;">
+                            <i class="fas fa-phone" style="color:#64ffda;"></i>
+                        </div>
+                        <div>
+                            <p style="color:#8892b0; font-size:0.85rem; margin-bottom:2px;">Phone</p>
+                            <p style="color:#ccd6f6; font-size:0.95rem; margin:0;">{{ about.phone }}</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-start mb-3">
+                        <div style="width:40px; height:40px; background:rgba(100,255,218,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; flex-shrink:0;">
+                            <i class="fas fa-map-marker-alt" style="color:#64ffda;"></i>
+                        </div>
+                        <div>
+                            <p style="color:#8892b0; font-size:0.85rem; margin-bottom:2px;">Location</p>
+                            <p style="color:#ccd6f6; font-size:0.95rem; margin:0;">{{ about.location }}</p>
+                        </div>
+                    </div>
+
+                    {% if about.github %}
+                    <div class="d-flex align-items-start mb-3">
+                        <div style="width:40px; height:40px; background:rgba(100,255,218,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; flex-shrink:0;">
+                            <i class="fab fa-github" style="color:#64ffda;"></i>
+                        </div>
+                        <div>
+                            <p style="color:#8892b0; font-size:0.85rem; margin-bottom:2px;">GitHub</p>
+                            <a href="{{ about.github }}" target="_blank"
+                               style="color:#ccd6f6; text-decoration:none; font-size:0.95rem;">
+                                {{ about.github }}
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if about.linkedin %}
+                    <div class="d-flex align-items-start">
+                        <div style="width:40px; height:40px; background:rgba(100,255,218,0.1); border-radius:8px; display:flex; align-items:center; justify-content:center; margin-right:15px; flex-shrink:0;">
+                            <i class="fab fa-linkedin" style="color:#64ffda;"></i>
+                        </div>
+                        <div>
+                            <p style="color:#8892b0; font-size:0.85rem; margin-bottom:2px;">LinkedIn</p>
+                            <a href="{{ about.linkedin }}" target="_blank"
+                               style="color:#ccd6f6; text-decoration:none; font-size:0.95rem;">
+                                {{ about.linkedin }}
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+
+                <!-- Availability Card -->
+                <div class="card-dark">
+                    <h5 style="color:#ccd6f6; margin-bottom:15px;">
+                        <i class="fas fa-circle me-2" style="color:#64ffda; font-size:0.7rem;"></i>
+                        Availability
+                    </h5>
+                    <p style="color:#8892b0; font-size:0.95rem; line-height:1.7;">
+                        I am currently available for Graduate Assistant positions,
+                        freelance projects, and collaboration opportunities.
+                        Feel free to reach out!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - Shyam Kumar Bhattarai{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">My <span>Blog</span></h2>
+        <div class="section-divider"></div>
+
+        <div class="row">
+            <!-- Blog Posts -->
+            <div class="col-lg-8">
+                {% for post in posts %}
+                <div class="card-dark mb-4">
+                    {% if post.thumbnail %}
+                    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}"
+                         style="width:100%; height:200px; object-fit:cover; border-radius:5px; margin-bottom:15px;">
+                    {% endif %}
+
+                    <div class="d-flex align-items-center mb-2">
+                        {% if post.category %}
+                        <span style="background:rgba(100,255,218,0.1); color:#64ffda; padding:3px 10px; border-radius:20px; font-size:0.8rem; margin-right:10px;">
+                            {{ post.category.name }}
+                        </span>
+                        {% endif %}
+                        <span style="color:#8892b0; font-size:0.85rem;">
+                            <i class="fas fa-calendar me-1"></i>
+                            {{ post.created_at|date:"M d, Y" }}
+                        </span>
+                    </div>
+
+                    <h4 style="color:#ccd6f6; font-weight:600; margin-bottom:10px;">
+                        {{ post.title }}
+                    </h4>
+
+                    <p style="color:#8892b0; font-size:0.95rem; line-height:1.7;">
+                        {{ post.content|striptags|truncatewords:30 }}
+                    </p>
+
+                    <a href="{% url 'blog_detail' post.slug %}"
+                       class="btn-primary-custom mt-3"
+                       style="font-size:0.9rem; padding:8px 20px;">
+                        Read More
+                    </a>
+                </div>
+                {% empty %}
+                <div class="card-dark">
+                    <p style="color:#8892b0;">No blog posts yet. Check back soon!</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Categories -->
+                <div class="card-dark mb-4">
+                    <h5 style="color:#64ffda; margin-bottom:15px;">
+                        <i class="fas fa-folder me-2"></i>Categories
+                    </h5>
+                    {% for category in categories %}
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.05); padding:8px 0;">
+                        <a href="#" style="color:#8892b0; text-decoration:none; transition:color 0.3s;"
+                           onmouseover="this.style.color='#64ffda'"
+                           onmouseout="this.style.color='#8892b0'">
+                            <i class="fas fa-chevron-right me-2" style="font-size:0.7rem;"></i>
+                            {{ category.name }}
+                        </a>
+                    </div>
+                    {% empty %}
+                    <p style="color:#8892b0; font-size:0.9rem;">No categories yet.</p>
+                    {% endfor %}
+                </div>
+
+                <!-- About Me Widget -->
+                <div class="card-dark">
+                    <h5 style="color:#64ffda; margin-bottom:15px;">
+                        <i class="fas fa-user me-2"></i>About Me
+                    </h5>
+                    {% if about %}
+                    <p style="color:#8892b0; font-size:0.9rem; line-height:1.7;">
+                        {{ about.bio|truncatewords:30 }}
+                    </p>
+                    {% endif %}
+                    <a href="{% url 'contact' %}" class="btn-primary-custom mt-3"
+                       style="font-size:0.85rem; padding:6px 16px;">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
